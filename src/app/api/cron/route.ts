@@ -49,9 +49,13 @@ export async function GET() {
     "https://rpc.ankr.com/blast/6c566b719e46d450ac87294a9ad8d45a88b0f3d9acf2763053333355589f6cf2"
   );
 
-  const borrowPrice = await getBorrowPrice(provider);
+try {
+    const borrowPrice = await getBorrowPrice(provider);
 
-  const swapPrice = await getSwapPrice(provider);
-
-  return NextResponse.json({ ok: true, borrowPrice, swapPrice });
+    const swapPrice = await getSwapPrice(provider);
+  
+    return NextResponse.json({ ok: true, borrowPrice, swapPrice });
+} catch (error) {
+    return NextResponse.json({ ok: false, borrowPrice:0, swapPrice:0 });
+}
 }
