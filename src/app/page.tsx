@@ -1,9 +1,9 @@
+import { getPrices } from "./actions";
 import DisplayBlockNumber from "./components/DisplayBlockNumber";
 
 export default async function Home() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cron`, {
-    next: { revalidate: 60 * 60 },
-  });
+  const response = await getPrices();
+
   const data = await response.json();
 
   const { borrowPrice, swapPrice } = data;
