@@ -1,7 +1,7 @@
 "use client";
 
 import { ethers } from "ethers";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function DisplayBlockNumber() {
   const [blockNumber, setBlockNumber] = useState<number>(0);
