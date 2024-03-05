@@ -1,10 +1,12 @@
 "use client";
 
 import { ethers } from "ethers";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { refresh } from "./actions";
 
 export default function DisplayBlockNumber() {
   const [blockNumber, setBlockNumber] = useState<number>(0);
+  const oldBlockNumber = useRef<number>(0);
 
   useEffect(() => {
     const provider = new ethers.JsonRpcProvider(
@@ -13,6 +15,16 @@ export default function DisplayBlockNumber() {
 
     const interval = setInterval(async () => {
       const number = await provider.getBlockNumber();
+
+      if (oldBlockNumber.current === 0) {
+        oldBlockNumber.current = number;
+      }
+
+      if (number !== oldBlockNumber.current) {
+        oldBlockNumber.current = number;
+
+        refresh();
+      }
       setBlockNumber(number);
     }, 60 * 60);
 
